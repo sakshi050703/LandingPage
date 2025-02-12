@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../Assets/Home.css'
 import twitch from '../Static/Vector.png'
 import google from '../Static/Google.png'
@@ -11,31 +11,26 @@ import cardlogo3 from '../Static/cardlogo3.png'
 import cardlogo4 from '../Static/Black.png'
 import grilimg from '../Static/girlimg.jpg'
 import uncover from '../Static/uncover.jpg'
-import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import SuccessModal from './SuccessModal'
-import carsoullogo from '../Static/carsoullogo.png'
-import playbutton from '../Static/play.png'
 const Home = () => {
 
-  const { register, handleSubmit, reset ,formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const modalRef = useRef(null);
 
-  // Function to handle form submission
   const addData = async (data, event) => {
     event.preventDefault();
     try {
       await axios.post('http://localhost:9000/users', data);
-      reset(); // Reset form fields
-      
-      // Close the modal
+      reset();
+
       if (modalRef.current) {
         const bootstrapModal = window.bootstrap.Modal.getInstance(modalRef.current);
         bootstrapModal.hide();
       }
-      
+
       setTimeout(() => setShowSuccessModal(true), 500);
     } catch (error) {
       console.error('Error:', error);
@@ -48,15 +43,15 @@ const Home = () => {
     }
   }, [showSuccessModal]);
 
-  const [user,setUser] = useState([])
-    const getdata= async()=>{
-            const response = await axios.get('http://localhost:9000/users')
-            const result = response.data
-            setUser(result)
-    }
-    useEffect(()=>{
-        getdata()
-    },[])
+  const [user, setUser] = useState([])
+  const getdata = async () => {
+    const response = await axios.get('http://localhost:9000/users')
+    const result = response.data
+    setUser(result)
+  }
+  useEffect(() => {
+    getdata()
+  }, [])
   return (
     <div className=''>
       <div className='main-content'>
@@ -68,104 +63,99 @@ const Home = () => {
             <p className='info'>Stay organized and boost your productivity with our intuitive todo website. Experience a modern approach to task management that fits your lifestyle.</p>
           </div>
           <div className='button'>
-          <button type="button" className="btn2 rounded-5  getstarted" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Get Started
-      </button>
-            {/* <!-- Modal --> */}
+            <button type="button" className="btn2 rounded-5  getstarted" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Get Started
+            </button>
+
             <form onSubmit={handleSubmit(addData)}>
 
-            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content">
-      {/* <!-- Modal Header --> */}
-      <div className="modal-header border-0 ps-0">
-        <h1 className="modal-title fs-5" id="exampleModalLabel">Get Started Today!</h1>
-        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+              <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                  <div className="modal-content">
 
-      </div>
+                    <div className="modal-header border-0 ps-0">
+                      <h1 className="modal-title fs-5" id="exampleModalLabel">Get Started Today!</h1>
+                      <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
 
-      {/* <!-- Modal Body --> */}
-      <div className="modal-body p-0 text-start">
-        <p>Fill in your details and take control of your tasks.</p>
+                    </div>
 
-        {/* <!-- Form --> */}
-        {/* <form> */}
-          {/* <!-- First Name & Last Name --> */}
-          <div className=" d-flex name-detail">
-            <div className='from-detail'>
-            <label className="form-label">First Name</label>
-            <input type="text" className='input' placeholder="Enter your first name" {...register('fname', { required: " required" })}/>
-{errors.fname && <span className="text-danger">{errors.fname.message}</span>}
+                    <div className="modal-body p-0 text-start">
+                      <p>Fill in your details and take control of your tasks.</p>
 
-            </div>
-            <div>
-            <label className="form-label lastname">Last Name</label>
-            <input type="text" className='input' placeholder="Enter your last name" {...register('lname', { required: "required" })}/>
-{errors.fname && <span className="text-danger">{errors.lname.message}</span>}
 
-            </div>
-          </div>
-        {/* </form> */}
-      </div>
-      <div className=''>
-          <div className="d-flex gap-3 align-items-center">
-            <label className="form-label">Gender</label>
-            <div className='language'> 
-              <input type="radio" id="male" name="gender" value="male" {...register('gender')}/>
-              <label htmlFor="male">Male</label>
-        </div>
-        <div className='language'> 
-              <input type="radio" id="female" name="gender" value="female" {...register('gender')}/>
-              <label htmlFor="female">Female</label>
-            </div>
-          </div>
-          </div>
-          <div className="mb-3">
-            <label className="form-label" id='language'>Language</label>
-            <div className='language'>
-              <input type="checkbox" id="english" name="language" value='english' {...register('language')}/>
-              <label htmlFor="english">English</label>
-            </div>
-            <div className='language'>
-            <input type="checkbox" id="hindi" name="language" value='hindi'{...register('language')}/>
-            <label htmlFor="hindi">Hindi</label>
+                      <div className=" d-flex name-detail">
+                        <div className='from-detail'>
+                          <label className="form-label">First Name</label>
+                          <input type="text" className='input' placeholder="Enter your first name" {...register('fname', { required: " required" })} />
+                          {errors.fname && <span className="text-danger">{errors.fname.message}</span>}
+
+                        </div>
+                        <div>
+                          <label className="form-label lastname">Last Name</label>
+                          <input type="text" className='input' placeholder="Enter your last name" {...register('lname', { required: "required" })} />
+                          {errors.fname && <span className="text-danger">{errors.lname.message}</span>}
+
+                        </div>
+                      </div>
+
+                    </div>
+                    <div className=''>
+                      <div className="d-flex gap-3 align-items-center">
+                        <label className="form-label">Gender</label>
+                        <div className='language'>
+                          <input type="radio" id="male" name="gender" value="male" {...register('gender')} />
+                          <label htmlFor="male">Male</label>
+                        </div>
+                        <div className='language'>
+                          <input type="radio" id="female" name="gender" value="female" {...register('gender')} />
+                          <label htmlFor="female">Female</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label" id='language'>Language</label>
+                      <div className='language'>
+                        <input type="checkbox" id="english" name="language" value='english' {...register('language')} />
+                        <label htmlFor="english">English</label>
+                      </div>
+                      <div className='language'>
+                        <input type="checkbox" id="hindi" name="language" value='hindi'{...register('language')} />
+                        <label htmlFor="hindi">Hindi</label>
+                      </div>
+                      <div className='language'>
+
+                        <input type="checkbox" id="marathi" name="language" value='marathi'{...register('language')} />
+                        <label htmlFor="marathi">Marathi</label>
+                      </div>
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label">Email Address</label>
+                      <input type="email" className="form-control input w-100" id="email" placeholder="Enter your email address" {...register('email')} />
+                    </div>
+
+                    <div className="mb-3 form-check">
+                      <input type="checkbox" className="form-check-input" id="terms" />
+                      <label className="form-check-label" htmlFor="terms">I agree to the <a href="#">terms and conditions</a></label>
+                    </div>
+
+                    <div className="modal-footer border-0">
+
+                      <button
+                        className="btn btn-danger w-100"
+                        type="submit"
+                      >
+                        Submit
+                      </button>
+
+                      {showSuccessModal && <SuccessModal onClose={() => setShowSuccessModal(false)} />}
+
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className='language'>
 
-              <input type="checkbox" id="marathi" name="language"  value='marathi'{...register('language')}/>
-              <label htmlFor="marathi">Marathi</label>
-            </div>
-          </div>
-           {/* <!-- Email --> */}
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email Address</label>
-            <input type="email" className="form-control input w-100" id="email" placeholder="Enter your email address" {...register('email')}/>
-          </div> 
-
-          {/* <!-- Terms and Conditions --> */}
-           <div className="mb-3 form-check">
-            <input type="checkbox" className="form-check-input" id="terms"/>
-            <label className="form-check-label" htmlFor="terms">I agree to the <a href="#">terms and conditions</a></label>
-          </div>
-      {/* <!-- Modal Footer --> */}
-      <div className="modal-footer border-0">
-        {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button> */}
-        <button
-  className="btn btn-danger w-100" 
-  type="submit" // Ensures form submission
->
-  Submit
-</button>
-
-  {/* Success Modal */}
-  {showSuccessModal && <SuccessModal onClose={() => setShowSuccessModal(false)} />}
-
-      </div>
-    </div>
-  </div>
-</div>
-
-</form>
+            </form>
 
             <button className='btn1 rounded-5 learn btn-gap'>Learn more</button>
           </div>
@@ -185,35 +175,8 @@ const Home = () => {
                   <button className='button2'>Discover Features</button>
                 </div>
               </div>
-              <div className='carsoul text-dark'>
-              <div className="overflow-hidden">
-      <div className="relative rounded-5">
-        <div>
-        <h4 className='text-start text-light p-4 fs-3'><span className='fs-2 text-body-tertiary'>Your Task</span> <br></br> Our Tools</h4>
-        </div>
-             <div className='text-light text-start greater-than'>
-           
-             <i className="fa-solid fa-less-than fs-2"></i>
-             <i className="fa-solid fa-greater-than fs-2 text-center"></i>
-              </div> 
-              <div className='carsoullogo ps-5'>
-                <img src={carsoullogo}/>
-              </div>
-              <div className='d-flex '>
-              <div className='text-start ps-5'>
-                <h4>Freddie Halvorson</h4>
-                <h6>Chief Productivity Enthusiast</h6>
-              </div>
-              <div className='ms-5'>
-                <img src={playbutton}/>
-              </div>
-              </div>
-            
-      </div>
 
-    </div>
 
-              </div>
             </div>
             <div className='social-media d-flex justify-content-between'>
               <div className='group'>
@@ -368,28 +331,28 @@ const Home = () => {
       </div>
       <table className=' container mt-5'>
         <thead>
-            <tr>
-                <th>Sr no.</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Language</th>
-                <th>email</th>
-            </tr>
+          <tr>
+            <th>Sr no.</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Language</th>
+            <th>email</th>
+          </tr>
         </thead>
         <tbody>
-            {
-                user.map((u,index)=>{
-                    return(
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{u.fname} {u.lname}</td>
-                            <td>{u.gender}</td>
-                            <td>{Array.isArray(u.language) ? u.language.join(", ") : "N/A"}</td>
-                            <td>{u.email}</td>
-                        </tr>
-                    )
-                })
-            }
+          {
+            user.map((u, index) => {
+              return (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{u.fname} {u.lname}</td>
+                  <td>{u.gender}</td>
+                  <td>{Array.isArray(u.language) ? u.language.join(", ") : "N/A"}</td>
+                  <td>{u.email}</td>
+                </tr>
+              )
+            })
+          }
         </tbody>
       </table>
     </div>

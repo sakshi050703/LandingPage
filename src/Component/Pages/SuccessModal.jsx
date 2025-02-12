@@ -1,10 +1,8 @@
-import '../Assets/Successmodel.css'
 import heart from '../Static/heart.png'
 const SuccessModal = ({ onClose }) => {
   const handleClose = () => {
     onClose();
 
-    // Also ensure that the form modal is closed
     const formModal = document.getElementById('exampleModal');
     if (formModal) {
       const modalInstance = window.bootstrap.Modal.getInstance(formModal);
@@ -19,7 +17,7 @@ const SuccessModal = ({ onClose }) => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header mx-auto">
-            <h5 className="modal-title text-center"><img src={heart} alt='heart' height={70} width={70}/></h5>
+            <h5 className="modal-title text-center"><img src={heart} alt='heart' height={70} width={70} /></h5>
           </div>
           <div className="modal-body text-center">
             <h4>Thank you for connecting with us.</h4>
